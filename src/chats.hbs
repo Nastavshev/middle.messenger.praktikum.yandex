@@ -1,0 +1,114 @@
+---
+currentUser: {
+    name: "Наставшев Юрий",
+    status: online,
+    time: "12:45",
+    message: "Добрый день!",
+}
+users: [
+    {
+        name: "Иванов Иван",
+        message: "Как сделать чат используя html и CSS",
+        time: "10:56",
+        counter: 0,
+        active: true,
+    },
+    {
+        name: "Светлана Иванова",
+        message: "Привет, я нашла тебя в Телеграмме",
+        time: "12:36",
+        counter: 1,
+        active: false,
+    },
+]
+---
+<html>
+
+<head>
+  <title>chatApp</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <div class="leftSide">
+      <!-- header -->
+      <div class="header">
+        <a class="userimg" href="./profile.hbs">
+          <img src="../static/avatar.jpg" class="cover">
+        </a>
+        <ul class="nav_icons">
+            <li><span class="material-icons">more_vert</span></li>
+        </ul>
+      </div>
+      <!-- search -->
+      <div class="search_chat">
+        <div>
+          <input type="text" placeholder="Поиск нового чата">
+          <span class="material-icons">search</span>
+        </div>
+      </div>
+      <!-- chat list -->
+      <div class="chatlist">
+        {{#each users}}
+        {{#if this.active}}
+        <div class="block active">
+        {{else if this.counter}}
+        <div class="block unread">
+        {{else}}
+        <div class="block">
+        {{/if}}
+          <div class="imgbx">
+            <img src="../static/avatar.jpg" class="cover">
+          </div>
+          <div class="details">
+            <div class="listHead">
+              <h4>{{this.name}}</h4>
+              <p class="time">{{this.time}}</p>
+            </div>
+            <div class="message_p">
+              <p>{{this.message}}</p>
+                {{#if this.counter}}
+                <b>{{this.counter}}</b>
+                {{/if}}
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    <div class="rightSide">
+      <div class="header">
+        <div class="imgText">
+          <div class="userimg">
+            <img src="../static/avatar.jpg" class="cover">
+          </div>
+          <h4>{{currentUser.name}}<br><span>{{currentUser.status}}</span></h4>
+        </div>
+        <ul class="nav_icons">
+          <li><span class="material-icons">search</span></li>
+          <li><span class="material-icons">more_vert</span></li>
+        </ul>
+      </div>
+      <!-- chatbox -->
+      <div class="chatBox">
+        <div class="message my_message">
+          <p>{{currentUser.message}}<br><span>{{currentUser.time}}</span></p>
+        </div>
+        <div class="message frnd_message">
+          <p>{{users.[0].message}}<br><span>{{users.[0].time}}</span></p>
+        </div>
+      </div>
+      <!-- chat input -->
+      <div class="chatbox_input">
+        <span class="material-icons">sentiment_satisfied_alt</span>
+        <span class="material-icons">attach_file</span>
+        <input type="text" placeholder="Напечатать сообщение">
+        <span class="material-icons">send</span>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
