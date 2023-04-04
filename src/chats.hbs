@@ -1,95 +1,116 @@
-<html>
+---
+currentUser: {
+    name: "Наставшев Юрий",
+    status: online,
+    time: "12:45",
+    message: "Добрый день!",
+}
+users: [
+    {
+        name: "Иванов Иван",
+        message: "Как сделать чат используя html и CSS",
+        time: "10:56",
+        counter: 0,
+        active: true,
+    },
+    {
+        name: "Светлана Иванова",
+        message: "Привет, я нашла тебя в Телеграмме",
+        time: "12:36",
+        counter: 1,
+        active: false,
+    },
+]
+---
+<html lang="ru">
 
 <head>
   <title>chatApp</title>
   <link rel="stylesheet" href="./styles.css">
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
-  <div class="container">
-    <div class="leftSide">
-      <!-- header -->
-      <div class="header">
-        <a class="userimg" href="./profile.hbs">
-          <img src="../static/avatar.jpg" class="cover">
-        </a>
-        <ul class="nav_icons">
-          <li><ion-icon name="ellipsis-vertical"></ion-icon></ui>
-        </ul>
-      </div>
-      <!-- search -->
-      <div class="search_chat">
-        <div>
-          <input type="text" placeholder="Поиск нового чата">
-          <ion-icon name="search-outline"></ion-icon>
-        </div>
-      </div>
-      <!-- chat list -->
-      <div class="chatlist">
-        <div class="block active">
-          <div class="imgbx">
+  <main>
+    <div class="container">
+      <div class="leftSide">
+        <!-- header -->
+        <div class="header">
+          <a class="userimg" href="./profile.hbs">
             <img src="../static/avatar.jpg" class="cover">
-          </div>
-          <div class="details">
-            <div class="listHead">
-              <h4>Наставшев Юрий</h4>
-              <p class="time">10:56</p>
-            </div>
-            <div class="message_p">
-              <p>Как сделать чат используя html и CSS</p>
-            </div>
+          </a>
+          <ul class="nav_icons">
+              <li><span class="material-icons">more_vert</span></li>
+          </ul>
+        </div>
+        <!-- search -->
+        <div class="search_chat">
+          <div>
+            <input type="text" placeholder="Поиск нового чата">
+            <span class="material-icons">search</span>
           </div>
         </div>
-        <div class="block unread">
-          <div class="imgbx">
-            <img src="../static/avatar.jpg" class="cover">
-          </div>
-          <div class="details">
-            <div class="listHead">
-              <h4>Светлана Иванова</h4>
-              <p class="time">12:36</p>
+        <!-- chat list -->
+        <div class="chatlist">
+          {{#each users}}
+          {{#if this.active}}
+          <div class="block active">
+          {{else if this.counter}}
+          <div class="block unread">
+          {{else}}
+          <div class="block">
+          {{/if}}
+            <div class="imgbx">
+              <img src="../static/avatar.jpg" class="cover">
             </div>
-            <div class="message_p">
-              <p>Привет, я нашла тебя в Телеграмме</p>
-              <b>1</b>
+            <div class="details">
+              <div class="listHead">
+                <h4>{{this.name}}</h4>
+                <p class="time">{{this.time}}</p>
+              </div>
+              <div class="message_p">
+                <p>{{this.message}}</p>
+                  {{#if this.counter}}
+                  <b>{{this.counter}}</b>
+                  {{/if}}
+              </div>
             </div>
           </div>
+          {{/each}}
+        </div>
+      </div>
+      <div class="rightSide">
+        <div class="header">
+          <div class="imgText">
+            <div class="userimg">
+              <img src="../static/avatar.jpg" class="cover">
+            </div>
+            <h4>{{currentUser.name}}<br><span>{{currentUser.status}}</span></h4>
+          </div>
+          <ul class="nav_icons">
+            <li><span class="material-icons">search</span></li>
+            <li><span class="material-icons">more_vert</span></li>
+          </ul>
+        </div>
+        <!-- chatbox -->
+        <div class="chatBox">
+          <div class="message my_message">
+            <p>{{currentUser.message}}<br><span>{{currentUser.time}}</span></p>
+          </div>
+          <div class="message frnd_message">
+            <p>{{users.[0].message}}<br><span>{{users.[0].time}}</span></p>
+          </div>
+        </div>
+        <!-- chat input -->
+        <div class="chatbox_input">
+          <span class="material-icons">sentiment_satisfied_alt</span>
+          <span class="material-icons">attach_file</span>
+          <input type="text" placeholder="Напечатать сообщение">
+          <span class="material-icons">send</span>
         </div>
       </div>
     </div>
-    <div class="rightSide">
-      <div class="header">
-        <div class="imgText">
-          <div class="userimg">
-            <img src="../static/avatar.jpg" class="cover">
-          </div>
-          <h4>Наставшев Юрий<br><span>online</span></h4>
-        </div>
-        <ul class="nav_icons">
-          <li><ion-icon name="search-outline"></ion-icon></ui>
-          <li><ion-icon name="ellipsis-vertical"></ion-icon></ui>
-        </ul>
-      </div>
-      <!-- chatbox -->
-      <div class="chatBox">
-        <div class="message my_message">
-          <p>Добрый день!<br><span>12:30</span></p>
-        </div>
-        <div class="message frnd_message">
-          <p>Привет!<br><span>12:45</span></p>
-        </div>
-      </div>
-      <!-- chat input -->
-      <div class="chatbox_input">
-        <ion-icon name="happy-outline"></ion-icon>
-        <ion-icon name="attach-outline"></ion-icon>
-        <input type="text" placeholder="Напечатать сообщение">
-        <ion-icon name="send-outline"></ion-icon>
-      </div>
-    </div>
-  </div>
+  </main>
 </body>
 
 </html>
